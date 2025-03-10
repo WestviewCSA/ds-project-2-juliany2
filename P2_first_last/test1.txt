@@ -1,0 +1,6 @@
+5 4 1
+@@@@garbage here is ignored
+W.@$
+@...
+...@
+@..@ can this be ignored?
