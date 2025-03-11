@@ -8,3 +8,5 @@ do to finish this project.
 
 1) read the specs - understand the problem
 2) understand map-based input files
+3) make test cases
+4) reading in maps
