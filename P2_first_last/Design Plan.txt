@@ -11,3 +11,6 @@ do to finish this project.
 3) make test cases
 4) reading with map format
 5) reading with coordinate format
+6) code path finding algorithms with queue, stack, and optimal path finding
+7) test with JUnit test cases for errors and fix the bugs
+8) figure out how to output the answer in both formats
