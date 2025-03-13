@@ -1,5 +1,7 @@
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.util.LinkedList;
+import java.util.Queue;
 import java.util.Scanner;
 
 public class p2 {
@@ -84,5 +86,11 @@ public class p2 {
 		} catch (FileNotFoundException e) {
 			System.out.println(e);
 		}
+	}
+	
+	public static void queueSolve() {
+		Queue<Integer> q = new LinkedList<>();
+		
+		
 	}
 }
