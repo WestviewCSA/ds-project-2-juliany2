@@ -15,6 +15,10 @@ public class Map {
 		map[r][c] = tile;
 	}
 	
+	public Tile get(int r, int c) {
+		return map[r][c];
+	}
+	
 	public void print() {
 		for (int i = 0; i < map.length; i++) {
 			for (int j = 0; j < map[i].length; j++) {
