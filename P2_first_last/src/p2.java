@@ -140,7 +140,7 @@ public class p2 {
 			for (int i = 0; i < numRows; i++) {
 				for (int j = 0; j < numCols; j++) {
 					if (grid[room].get(i, j).getType() == '$') {
-						
+						if 
 					}
 				}
 			}

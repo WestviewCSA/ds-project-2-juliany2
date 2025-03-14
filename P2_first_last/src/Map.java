@@ -16,8 +16,9 @@ public class Map {
 	}
 	
 	public Tile get(int r, int c) {
+		// return dummy tile if its out of bounds
 		if (r < 0 || c < 0 || r > map.length || c > map[0].length) {
-			return null;
+			return new Tile(-1, -1, 'e');
 		}
 		return map[r][c];
 	}
