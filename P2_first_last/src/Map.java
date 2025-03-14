@@ -16,6 +16,9 @@ public class Map {
 	}
 	
 	public Tile get(int r, int c) {
+		if (r < 0 || c < 0 || r > map.length || c > map[0].length) {
+			return null;
+		}
 		return map[r][c];
 	}
 	

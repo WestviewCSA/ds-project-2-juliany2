@@ -6,8 +6,14 @@ import java.util.Scanner;
 
 public class p2 {
 	
+	// global variables for direction
+	static int dirc[] = {0, 1, 0, -1};
+	static int dirr[] = {1, 0, -1, 0};
+	
+	// stores the grid in an array of Maps
 	static Map grid[];
 	
+	// dimensions
 	static int numRows, numCols, numRooms;
 
 
@@ -98,6 +104,8 @@ public class p2 {
 	public static void queueSolve() {
 		for (int room = 0; room < numRooms; room++) {
 			Queue<Tile> q = new LinkedList<>();
+			boolean visited[][] = new boolean[numRows][numCols];
+			int distance[][] = new int[numRows][numCols];
 			
 			for (int i = 0; i < numRows; i++) {
 				for (int j = 0; j < numCols; j++) {
@@ -107,8 +115,34 @@ public class p2 {
 				}
 			}
 			
+			// get shortest distance to each cell
 			while (!q.isEmpty()) {
 				Tile cur = q.remove();
+				
+				int r = cur.getRow();
+				int c = cur.getCol();
+				
+				// try to go in all 4 directions
+				for (int dir = 0; dir < 4; dir++) {
+					int r0 = r + dirc[dir];
+					int c0 = c + dirr[dir];
+					
+					// check if its a valid tile and empty
+					if (grid[room].get(r0, c0).getType() != '@') {
+						if (!visited[r0][c0]) {
+							distance[r0][c0] = distance[r][c] + 1;
+							q.add(grid[room].get(r0, c0));
+						}
+					}
+				}
+			}
+			
+			for (int i = 0; i < numRows; i++) {
+				for (int j = 0; j < numCols; j++) {
+					if (grid[room].get(i, j).getType() == '$') {
+						
+					}
+				}
 			}
 		}
 	}
