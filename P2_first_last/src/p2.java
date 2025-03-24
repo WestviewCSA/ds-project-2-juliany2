@@ -21,6 +21,8 @@ public class p2 {
 		// TODO Auto-generated method stub
 		
 		readCoordinates("test1.txt");
+		queueSolve();
+		
 	}
 	
 	public static void readMap(String filename) {
@@ -106,15 +108,18 @@ public class p2 {
 			Queue<Tile> q = new LinkedList<>();
 			boolean visited[][] = new boolean[numRows][numCols];
 			int distance[][] = new int[numRows][numCols];
-			
+
 			for (int i = 0; i < numRows; i++) {
 				for (int j = 0; j < numCols; j++) {
+					distance[i][j] = -1;
 					if (grid[room].get(i, j).getType() == 'W') {
 						q.add(grid[room].get(i, j));
+						visited[i][j] = true;
+						distance[i][j] = 0;
 					}
 				}
 			}
-			
+
 			// get shortest distance to each cell
 			while (!q.isEmpty()) {
 				Tile cur = q.remove();
@@ -130,6 +135,7 @@ public class p2 {
 					// check if its a valid tile and empty
 					if (grid[room].get(r0, c0).getType() != '@') {
 						if (!visited[r0][c0]) {
+							visited[r0][c0] = true;
 							distance[r0][c0] = distance[r][c] + 1;
 							q.add(grid[room].get(r0, c0));
 						}
@@ -137,13 +143,40 @@ public class p2 {
 				}
 			}
 			
+			int er = -1, ec = -1;
 			for (int i = 0; i < numRows; i++) {
 				for (int j = 0; j < numCols; j++) {
-					if (grid[room].get(i, j).getType() == '$') {
-						if 
+					System.out.println(i + " " + j + " " + grid[room].get(i, j).getType());
+					char type = grid[room].get(i, j).getType();
+					if (type == '$' || type == '|') {
+						er = i;
+						ec = j;
 					}
 				}
 			}
+			
+			
+			while (distance[er][ec] != 0) {
+				for (int dir = 0; dir < 4; dir++) {
+					int r = er + dirc[dir];
+					int c = ec + dirr[dir];
+					
+					if (r < 0 || c < 0 || r >= numRows || c >= numCols) {
+						continue;
+					}
+					
+					if (visited[r][c] && distance[r][c] == distance[er][ec] - 1) {
+						if (grid[room].get(r, c).getType() == '.') {
+							grid[room].get(r, c).setType('X');
+						}
+						er = r;
+						ec = c;
+						break;
+					}
+				}
+			}
+			
+			grid[room].print();
 		}
 	}
 }
