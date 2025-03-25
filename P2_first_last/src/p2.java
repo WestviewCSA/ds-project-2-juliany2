@@ -264,13 +264,15 @@ public class p2 {
 		}
 	}
 	
-	
-	/*
-	 * 			
+	public void printMap() {
+		for (int room = 0; room < numRooms; room++) {
 			grid[room].print();
-			for (Tile t : path) {
-				System.out.println("+ " + t.getRow() + " " + t.getCol() + " " + room);
-			}
-			
-	*/
+		}
+	}
+	
+	public void printCoordinates() {
+		for (Tile t : path) {
+			System.out.println("+ " + t.getRow() + " " + t.getCol() + " " + room);
+		}
+	}
 }
