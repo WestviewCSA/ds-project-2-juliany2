@@ -24,10 +24,13 @@ public class p2 {
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		
-		readMap("test9.txt");
+		readMap("test8.txt");
+		
+		long start = System.nanoTime();
 		optimalPathSolve();
 		printMap();
 		printCoordinates();
+		System.out.println("Total Runtime: " + (double) (System.nanoTime() - start) / 1e9 + " seconds.");
 	}
 	
 	public static boolean validChar(char c) {
@@ -115,7 +118,9 @@ public class p2 {
 						throw new IllegalArgumentException("IllegalMapCharacterException");
 					}
 					
-					grid[k].set(r, c, new Tile(r, c, k, el));
+					if (r >= 0 && r < numRows && c >= 0 && c < numCols) {
+						grid[k].set(r, c, new Tile(r, c, k, el));
+					}
 				
 				}
 			}
