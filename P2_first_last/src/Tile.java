@@ -9,6 +9,7 @@ public class Tile {
 		this.row = row;
 		this.col = col;
 		this.type = type;
+		this.room = room;
 	}
 	public int getRow() {
 		return row;

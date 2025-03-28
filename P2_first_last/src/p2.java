@@ -1,5 +1,6 @@
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.Queue;
 import java.util.Scanner;
@@ -13,7 +14,7 @@ public class p2 {
 	
 	// stores the grid in an array of Maps
 	static Map grid[];
-	static LinkedList<Tile> path;
+	static ArrayList<Tile> path;
 	
 	// dimensions
 	static int numRows, numCols, numRooms;
@@ -22,8 +23,8 @@ public class p2 {
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		
-		readMap("test6.txt");
-		queueSolve();
+		readMap("test8.txt");
+		optimalPathSolve();
 		printMap();
 		printCoordinates();
 	}
@@ -103,7 +104,7 @@ public class p2 {
 	
 	
 	public static void queueSolve() {
-		path = new LinkedList<Tile>();
+		path = new ArrayList<Tile>();
 		for (int room = 0; room < numRooms; room++) {
 			Queue<Tile> q = new LinkedList<>();
 			boolean visited[][] = new boolean[numRows][numCols];
@@ -160,6 +161,9 @@ public class p2 {
 				return;
 			}
 			
+			// path for this room
+			ArrayList<Tile> curPath = new ArrayList<Tile>();
+
 			
 			// backtracking
 			while (distance[er][ec] != 0) {
@@ -175,13 +179,18 @@ public class p2 {
 					if (visited[r][c] && distance[r][c] == distance[er][ec] - 1) {
 						if (grid[room].get(r, c).getType() == '.') {
 							grid[room].get(r, c).setType('+');
-							path.add(0, grid[room].get(r, c));
+							curPath.add(0, grid[room].get(r, c));
 						}
 						er = r;
 						ec = c;
 						break;
 					}
 				}
+			}
+			
+			// put path into total path
+			for (Tile t : curPath) {
+				path.add(t);
 			}
 		}
 	}
@@ -192,7 +201,7 @@ public class p2 {
 	}
 	
 	public static void stackSolve() {
-		path = new LinkedList<Tile>();
+		path = new ArrayList<Tile>();
 		for (int room = 0; room < numRooms; room++) {
 			Stack<Tile> q = new Stack<>();
 			boolean visited[][] = new boolean[numRows][numCols];
@@ -249,6 +258,8 @@ public class p2 {
 				return;
 			}
 			
+			ArrayList<Tile> curPath = new ArrayList<Tile>();
+			
 			// backtracking
 			while (distance[er][ec] != 0) {
 				for (int dir = 0; dir < 4; dir++) {
@@ -262,13 +273,18 @@ public class p2 {
 					if (visited[r][c] && distance[r][c] == distance[er][ec] - 1) {
 						if (grid[room].get(r, c).getType() == '.') {
 							grid[room].get(r, c).setType('+');
-							path.add(0, grid[room].get(r, c));
+							curPath.add(0, grid[room].get(r, c));
 						}
 						er = r;
 						ec = c;
 						break;
 					}
 				}
+			}
+			
+			// add path to total path
+			for (Tile t : curPath) {
+				path.add(t);
 			}
 		}
 	}
@@ -281,7 +297,7 @@ public class p2 {
 	
 	public static void printCoordinates() {
 		for (Tile t : path) {
-			System.out.println("+ " + t.getRow() + " " + t.getCol());
+			System.out.println("+ " + t.getRow() + " " + t.getCol() + " " + t.getRoom());
 		}
 	}
 }

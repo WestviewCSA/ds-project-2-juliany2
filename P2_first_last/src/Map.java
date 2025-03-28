@@ -5,6 +5,7 @@ public class Map {
 
 	public Map(int r, int c, int room) {
 		map = new Tile[r][c];
+		this.room = room;
 		for (int i = 0; i < r; i++) {
 			for (int j = 0; j < c; j++) {
 				set(i, j, new Tile(i, j, room, '.'));
