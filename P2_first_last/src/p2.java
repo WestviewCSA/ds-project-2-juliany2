@@ -22,9 +22,10 @@ public class p2 {
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		
-		readMap("test4.txt");
+		readMap("test6.txt");
 		queueSolve();
-		
+		printMap();
+		printCoordinates();
 	}
 	
 	public static void readMap(String filename) {
@@ -37,21 +38,20 @@ public class p2 {
 			numRooms = scanner.nextInt();
 			
 			grid = new Map[numRooms];
-
-			int rowIndex = 0;
 			
 			for (int room = 0; room < numRooms; room++) {
-				grid[room] = new Map(numRows, numCols);
+				grid[room] = new Map(numRows, numCols, room);
+				int rowIndex = 0;
 							
 				// process the map
-				while (scanner.hasNextLine() && rowIndex < numRows) {
+				while (rowIndex < numRows) {
 					// grab a line (one row)
 					String row = scanner.nextLine();
 					
 					if (row.length() > 0) {
 						for (int i = 0; i < numCols && i < row.length(); i++) {
 							char el = row.charAt(i);
-							Tile obj = new Tile(rowIndex, i, el);
+							Tile obj = new Tile(rowIndex, i, room, el);
 							grid[room].set(rowIndex, i, obj);
 						}
 						rowIndex++;
@@ -76,7 +76,7 @@ public class p2 {
 			grid = new Map[numRooms];
 			
 			for (int room = 0; room < numRooms; room++) {
-				grid[room] = new Map(numRows, numCols);
+				grid[room] = new Map(numRows, numCols, room);
 			}
 				
 				
@@ -91,7 +91,7 @@ public class p2 {
 					int c = Character.getNumericValue(row.charAt(4));
 					int k = Character.getNumericValue(row.charAt(6));
 					
-					grid[k].set(r, c, new Tile(r, c, el));
+					grid[k].set(r, c, new Tile(r, c, k, el));
 				
 				}
 			}
@@ -103,6 +103,7 @@ public class p2 {
 	
 	
 	public static void queueSolve() {
+		path = new LinkedList<Tile>();
 		for (int room = 0; room < numRooms; room++) {
 			Queue<Tile> q = new LinkedList<>();
 			boolean visited[][] = new boolean[numRows][numCols];
@@ -146,20 +147,23 @@ public class p2 {
 			for (int i = 0; i < numRows; i++) {
 				for (int j = 0; j < numCols; j++) {
 					char type = grid[room].get(i, j).getType();
-					if (visited[i][j] && type == '$' || type == '|') {
+					if (visited[i][j] && (type == '$' || type == '|')) {
 						er = i;
 						ec = j;
 					}
 				}
 			}
 			
+			// cant reach final destination
 			if (er == -1 && ec == -1) {
 				System.out.println("The Wolverine Store is closed.");
 				return;
 			}
 			
-			path = new LinkedList<Tile>();
+			
+			// backtracking
 			while (distance[er][ec] != 0) {
+				
 				for (int dir = 0; dir < 4; dir++) {
 					int r = er + dirc[dir];
 					int c = ec + dirr[dir];
@@ -179,11 +183,16 @@ public class p2 {
 					}
 				}
 			}
-			grid[room].print();
 		}
 	}
 	
+	// bfs is shortest path
+	public static void optimalPathSolve() {
+		queueSolve();
+	}
+	
 	public static void stackSolve() {
+		path = new LinkedList<Tile>();
 		for (int room = 0; room < numRooms; room++) {
 			Stack<Tile> q = new Stack<>();
 			boolean visited[][] = new boolean[numRows][numCols];
@@ -227,19 +236,20 @@ public class p2 {
 			for (int i = 0; i < numRows; i++) {
 				for (int j = 0; j < numCols; j++) {
 					char type = grid[room].get(i, j).getType();
-					if (type == '$' || type == '|') {
+					if (visited[i][j] && (type == '$' || type == '|')) {
 						er = i;
 						ec = j;
 					}
 				}
 			}
 			
+			// if you cant reach the ending point
 			if (er == -1 && ec == -1) {
 				System.out.println("The Wolverine Store is closed.");
 				return;
 			}
 			
-			path = new LinkedList<Tile>();
+			// backtracking
 			while (distance[er][ec] != 0) {
 				for (int dir = 0; dir < 4; dir++) {
 					int r = er + dirc[dir];
@@ -260,19 +270,18 @@ public class p2 {
 					}
 				}
 			}
-			grid[room].print();
 		}
 	}
 	
-	public void printMap() {
+	public static void printMap() {
 		for (int room = 0; room < numRooms; room++) {
 			grid[room].print();
 		}
 	}
 	
-	public void printCoordinates() {
+	public static void printCoordinates() {
 		for (Tile t : path) {
-			System.out.println("+ " + t.getRow() + " " + t.getCol() + " " + room);
+			System.out.println("+ " + t.getRow() + " " + t.getCol());
 		}
 	}
 }
