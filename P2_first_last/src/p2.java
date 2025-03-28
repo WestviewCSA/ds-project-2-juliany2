@@ -62,6 +62,7 @@ public class p2 {
 							throw new IllegalArgumentException("IncompleteMapException");
 						}
 						
+						// check to make sure the 
 						for (int i = 0; i < numCols && i < row.length(); i++) {
 							char el = row.charAt(i);
 							
@@ -98,6 +99,7 @@ public class p2 {
 			
 			grid = new Map[numRooms];
 			
+			// initialize rooms
 			for (int room = 0; room < numRooms; room++) {
 				grid[room] = new Map(numRows, numCols, room);
 			}
@@ -108,7 +110,7 @@ public class p2 {
 				String row = scanner.nextLine();
 				
 				if (row.length() > 0) {
-					
+					// change a given tile, check if its valid
 					char el = row.charAt(0);
 					int r = Character.getNumericValue(row.charAt(2));
 					int c = Character.getNumericValue(row.charAt(4));
@@ -138,6 +140,7 @@ public class p2 {
 			boolean visited[][] = new boolean[numRows][numCols];
 			int distance[][] = new int[numRows][numCols];
 
+			// find starting tile
 			for (int i = 0; i < numRows; i++) {
 				for (int j = 0; j < numCols; j++) {
 					distance[i][j] = -1;
@@ -172,6 +175,7 @@ public class p2 {
 				}
 			}
 			
+			// find ending tile
 			int er = -1, ec = -1;
 			for (int i = 0; i < numRows; i++) {
 				for (int j = 0; j < numCols; j++) {
@@ -234,7 +238,8 @@ public class p2 {
 			Stack<Tile> q = new Stack<>();
 			boolean visited[][] = new boolean[numRows][numCols];
 			int distance[][] = new int[numRows][numCols];
-
+			
+			// find starting tile
 			for (int i = 0; i < numRows; i++) {
 				for (int j = 0; j < numCols; j++) {
 					distance[i][j] = -1;
@@ -269,6 +274,7 @@ public class p2 {
 				}
 			}
 			
+			// find ending tile
 			int er = -1, ec = -1;
 			for (int i = 0; i < numRows; i++) {
 				for (int j = 0; j < numCols; j++) {
@@ -286,6 +292,7 @@ public class p2 {
 				return;
 			}
 			
+			// path for current room
 			ArrayList<Tile> curPath = new ArrayList<Tile>();
 			
 			// backtracking
