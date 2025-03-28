@@ -1,4 +1,5 @@
 import java.io.File;
+import java.util.*;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -23,10 +24,14 @@ public class p2 {
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		
-		readMap("test8.txt");
+		readMap("test9.txt");
 		optimalPathSolve();
 		printMap();
 		printCoordinates();
+	}
+	
+	public static boolean validChar(char c) {
+		return c == '.' || c == '@' || c == 'W' || c == '|' || c == '$';
 	}
 	
 	public static void readMap(String filename) {
@@ -48,15 +53,29 @@ public class p2 {
 				while (rowIndex < numRows) {
 					// grab a line (one row)
 					String row = scanner.nextLine();
-					
 					if (row.length() > 0) {
+						
+						if (row.length() != numCols) {
+							throw new IllegalArgumentException("IncompleteMapException");
+						}
+						
 						for (int i = 0; i < numCols && i < row.length(); i++) {
 							char el = row.charAt(i);
+							
+							if (!validChar(el)) {
+								throw new IllegalArgumentException("IllegalMapCharacterException");
+							}
+							
 							Tile obj = new Tile(rowIndex, i, room, el);
 							grid[room].set(rowIndex, i, obj);
 						}
 						rowIndex++;
 					}
+				}
+				
+				
+				if (rowIndex != numRows) {
+					throw new IllegalArgumentException("IncompleteMapException");
 				}
 			}
 
@@ -91,6 +110,10 @@ public class p2 {
 					int r = Character.getNumericValue(row.charAt(2));
 					int c = Character.getNumericValue(row.charAt(4));
 					int k = Character.getNumericValue(row.charAt(6));
+					
+					if (!validChar(el)) {
+						throw new IllegalArgumentException("IllegalMapCharacterException");
+					}
 					
 					grid[k].set(r, c, new Tile(r, c, k, el));
 				
